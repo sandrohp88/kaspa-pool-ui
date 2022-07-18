@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require("tailwindcss/colors");
+
 module.exports = {
   content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  darkMode: "class",
   theme: {
     screens: {
       sm: "480px",
@@ -12,6 +15,12 @@ module.exports = {
       display: ["Consolas", "sans-serif"],
       body: ["Roboto", "serif"],
     },
+    colors: {
+      emerald: colors.emerald,
+      neutral: colors.neutral,
+      teal: colors.teal,
+    },
+
     fontSize: {
       xs: ".75rem",
       sm: ".875rem",

@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import { AreaChart, Area, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { ResponsiveContainer, AreaChart, Area, YAxis, Tooltip, Legend, XAxis } from "recharts";
 import colors from "tailwindcss/colors";
+import PropTypes from "prop-types";
 
 const propTypes = {
   data: PropTypes.arrayOf(
@@ -16,14 +16,14 @@ const propTypes = {
       }),
     }),
   ).isRequired,
-  hashrate: PropTypes.number.isRequired,
-  unit: PropTypes.string.isRequired,
 };
-
-function PoolStats({ data, hashrate, unit }) {
+function NetworkStats({ data }) {
   return (
     <>
-      <h2>{`Current hashrate: ${hashrate} ${unit}`}</h2>
+      <h2>{`Network Hashrate: ${data[data.length - 1].networkHashrate.hashrate} ${
+        data[data.length - 1].networkHashrate.unit
+      }`}</h2>
+
       <ResponsiveContainer>
         <AreaChart
           width={600}
@@ -48,7 +48,7 @@ function PoolStats({ data, hashrate, unit }) {
           <Legend />
           <Area
             type="monotone"
-            dataKey="poolHashrate.hashrate"
+            dataKey="networkHashrate.hashrate"
             stroke={colors.teal[600]}
             fill="url(#colorHash)"
             fillOpacity={1}
@@ -60,5 +60,6 @@ function PoolStats({ data, hashrate, unit }) {
     </>
   );
 }
-PoolStats.propTypes = propTypes;
-export default PoolStats;
+
+NetworkStats.propTypes = propTypes;
+export default NetworkStats;
