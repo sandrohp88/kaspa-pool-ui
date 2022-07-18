@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="rounded  border-4  border-[#009688]">
+    <header className="rounded  border-2  border-teal-700">
       <nav className=" w-full text-center   h-28 text-2xl  ">
         <ul className="items-center navbar-nav mr-auto lg:flex lg:flex-row justify-center space-x-4">
           <li className="nav-item pt-2">
