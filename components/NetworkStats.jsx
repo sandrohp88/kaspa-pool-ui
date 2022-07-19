@@ -20,9 +20,9 @@ const propTypes = {
 function NetworkStats({ data }) {
   return (
     <>
-      <h2>{`Network Hashrate: ${data[data.length - 1].networkHashrate.hashrate} ${
-        data[data.length - 1].networkHashrate.unit
-      }`}</h2>
+      <h2 className="text-xl font-semibold">{`Network Hashrate: ${
+        data[data.length - 1].networkHashrate.hashrate
+      } ${data[data.length - 1].networkHashrate.unit}`}</h2>
 
       <ResponsiveContainer>
         <AreaChart
