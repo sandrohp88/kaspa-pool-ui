@@ -23,7 +23,7 @@ const propTypes = {
 function PoolStats({ data, hashrate, unit }) {
   return (
     <>
-      <h2>{`Current hashrate: ${hashrate} ${unit}`}</h2>
+      <h2 className="text-xl font-semibold">{`Current hashrate: ${hashrate} ${unit}`}</h2>
       <ResponsiveContainer>
         <AreaChart
           width={600}
