@@ -10,9 +10,10 @@ import PropTypes from "prop-types";
 const propTypes = {
   hash: PropTypes.number.isRequired,
   decimals: PropTypes.number,
+  stringResult: PropTypes.bool,
 };
 
-export default function formatHashrate(hash, decimals = 2) {
+export default function formatHashrate(hash, decimals = 2, stringResult = false) {
   if (hash === 0) return "0 H";
   const hashToPrecision = Number(hash).toFixed(20);
   const k = 1000;
@@ -20,11 +21,15 @@ export default function formatHashrate(hash, decimals = 2) {
   const sizes = ["H/S", "KH/S", "MH/S", "GH/S", "TH/S", "PH/S"];
 
   const i = Math.floor(Math.log(hashToPrecision) / Math.log(k));
-
-  return {
+  const result = {
     hashrate: parseFloat((hashToPrecision / k ** i).toFixed(dm)),
     unit: sizes[i < 0 ? 0 : i],
   };
+
+  if (stringResult) {
+    return `${result.hashrate} ${result.unit}`;
+  }
+  return result;
 
   //   return `${parseFloat((hash / k ** i).toFixed(dm))} ${sizes[i]}`;
 }

@@ -16,5 +16,8 @@
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "editor.wordWrap": "on",
+    "cSpell.words": [
+      "describedby"
+    ],
     
   }
