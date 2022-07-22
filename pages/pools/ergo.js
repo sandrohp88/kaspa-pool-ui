@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 import moment from "moment";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { getPoolStats, getPoolPerformance, getPoolBlocks } from "../../api/getPoolStats";
 import NetworkStats from "../../components/NetworkStats";
 import PoolStats from "../../components/PoolStats";
@@ -47,9 +49,12 @@ const propTypes = {
       effort: PropTypes.number,
     }),
   ).isRequired,
+  blockCount: PropTypes.number.isRequired,
 };
 
-function ErgoPool({ pool, performance, blocks }) {
+function ErgoPool({ pool, performance, blocks, blockCount }) {
+  const router = useRouter();
+  const [searchInput, setSearchInput] = useState();
   const data = performance.map((elem) => {
     return {
       poolHashrate: formatHashrate(elem.poolHashrate),
@@ -58,6 +63,13 @@ function ErgoPool({ pool, performance, blocks }) {
     };
   });
   const { hashrate, unit } = formatHashrate(pool.poolStats.poolHashrate);
+
+  const onClickHandler = () => {
+    router.push(`/miner/${searchInput}`);
+  };
+  const searchInputHandler = (event) => {
+    setSearchInput(event.target.value);
+  };
   return (
     <>
       <div className="flex flex-row border-2  items-center border-teal-600 h-40 rounded-lg space-x-6 mx-8 my-8  text-center font-semibold">
@@ -65,6 +77,7 @@ function ErgoPool({ pool, performance, blocks }) {
           performance={performance}
           blocks={blocks}
           connectedMiners={pool.poolStats.connectedMiners}
+          blockCount={blockCount}
         />
       </div>
       <div className="flex flex-row  items-center border-teal-600 h-20 rounded-2xl  mx-20 my-10  text-center font-semibold justify-center ">
@@ -74,11 +87,13 @@ function ErgoPool({ pool, performance, blocks }) {
           placeholder="Search by your mining address"
           aria-label="Search"
           aria-describedby="button-addon2"
+          onInput={searchInputHandler}
         />
         <button
           className="btn inline-block px-6 py-2.5 bg-teal-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-teal-700 hover:shadow-lg focus:bg-teal-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-teal-800 active:shadow-lg transition duration-150 ease-in-out  items-center"
           type="button"
           id="button-addon2"
+          onClick={onClickHandler}
         >
           <svg
             aria-hidden="true"
@@ -115,7 +130,12 @@ export async function getServerSideProps() {
     const poolPerformance = await getPoolPerformance("ergo02");
     const poolBlocks = await getPoolBlocks("ergo02");
     return {
-      props: { pool: pool.pool, performance: poolPerformance.stats, blocks: poolBlocks.result },
+      props: {
+        pool: pool.pool,
+        performance: poolPerformance.stats,
+        blocks: poolBlocks.result,
+        blockCount: poolBlocks.pageCount,
+      },
     };
   } catch (error) {
     console.log(error);// eslint-disable-line

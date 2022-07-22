@@ -25,23 +25,28 @@ const propTypes = {
     }),
   ).isRequired,
   connectedMiners: PropTypes.number.isRequired,
+  blockCount: PropTypes.number.isRequired,
 };
-export default function PoolHeaderStats({ performance, blocks, connectedMiners }) {
+export default function PoolHeaderStats({ performance, blocks, connectedMiners, blockCount }) {
   return (
     <>
-      <div className="basis-1/3 ">
+      <div className="basis-1/4 ">
         <div className="">POOL HASHRATE</div>
         <div className="text-4xl">{getAVGHashrate(performance.map((ele) => ele.poolHashrate))}</div>
       </div>
-      <div className="basis-1/3">
+      <div className="basis-1/4">
         <div className="">AVERAGE EFFORT</div>
         <div className="text-4xl">
           {getPoolEffort(blocks.filter((block) => block.status === "confirmed"))}
         </div>
       </div>
-      <div className="basis-1/3">
+      <div className="basis-1/4">
         <div className="">MINERS</div>
         <div className="text-4xl">{connectedMiners}</div>
+      </div>
+      <div className="basis-1/4">
+        <div className="">BLOCKS FOUND</div>
+        <div className="text-4xl">{blockCount}</div>
       </div>
     </>
   );
