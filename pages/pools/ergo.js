@@ -52,7 +52,7 @@ const propTypes = {
   blockCount: PropTypes.number.isRequired,
 };
 
-function ErgoPool({ pool, performance, blocks, blockCount }) {
+function ErgoPool({ pool, performance, blockCount, blocks }) {
   const router = useRouter();
   const [searchInput, setSearchInput] = useState();
   const data = performance.map((elem) => {
@@ -126,15 +126,25 @@ function ErgoPool({ pool, performance, blocks, blockCount }) {
 
 export async function getServerSideProps() {
   try {
-    const pool = await getPoolStats("ergo02");
-    const poolPerformance = await getPoolPerformance("ergo02");
-    const poolBlocks = await getPoolBlocks("ergo02");
+    const pool = await getPoolStats("ergo001");
+    const poolPerformance = await getPoolPerformance("ergo001");
+
+    // Add defaults values to poolStats
+    const poolResponse = pool.pool.poolStats
+      ? pool.pool
+      : { ...pool.pool, poolStats: { poolHashrate: 0, connectedMiners: 0 } };
+    // Add defaults values in case pool performance is empty
+    const performance =
+      poolPerformance.stats.length === 0
+        ? [{ networkHashrate: 0, poolHashrate: 0, created: "DD-MM-YYY" }]
+        : poolPerformance.stats;
+    const poolBlocks = await getPoolBlocks("ergo001");
     return {
       props: {
-        pool: pool.pool,
-        performance: poolPerformance.stats,
-        blocks: poolBlocks.result,
-        blockCount: poolBlocks.pageCount,
+        pool: poolResponse,
+        performance,
+        blocks: poolBlocks,
+        blockCount: pool.pool.totalBlocks,
       },
     };
   } catch (error) {

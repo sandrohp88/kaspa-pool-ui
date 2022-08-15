@@ -75,7 +75,7 @@ function MinerStats({ miner, minerId }) {
             <div className="basis-1/3">
               {/* TODO */}
               <p>800 mhs</p>
-              <p className="text-lg">Current effective</p>
+              <p className="text-lg">Reported</p>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
-const port = process.env.PORT || 3004;
-const ROOT_URL = `${process.env.ROOT_URL}:${port}` || `http://localhost:${port}`;
+const port = process.env.PORT || 4000;
+const ROOT_URL = `http://host.docker.internal:${port}`;
 
 export default async function sendRequest(path, options = {}) {
   const headers = {

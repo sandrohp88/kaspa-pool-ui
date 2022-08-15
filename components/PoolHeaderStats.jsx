@@ -28,6 +28,8 @@ const propTypes = {
   blockCount: PropTypes.number.isRequired,
 };
 export default function PoolHeaderStats({ performance, blocks, connectedMiners, blockCount }) {
+  const confirmedBlocks = getPoolEffort(blocks.filter((block) => block.status === "confirmed"));
+  const avgEffort = confirmedBlocks > 0 ? confirmedBlocks : "No confirmed blocks yet";
   return (
     <>
       <div className="basis-1/4 ">
@@ -36,9 +38,7 @@ export default function PoolHeaderStats({ performance, blocks, connectedMiners, 
       </div>
       <div className="basis-1/4">
         <div className="">AVERAGE EFFORT</div>
-        <div className="text-4xl">
-          {getPoolEffort(blocks.filter((block) => block.status === "confirmed"))}
-        </div>
+        <div className="text-4xl">{avgEffort}</div>
       </div>
       <div className="basis-1/4">
         <div className="">MINERS</div>
