@@ -19,5 +19,6 @@
     "cSpell.words": [
       "describedby"
     ],
+    "prettier.trailingComma": "all",
     
   }

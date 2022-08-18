@@ -13,7 +13,11 @@ const propTypes = {
   stringResult: PropTypes.bool,
 };
 
-export default function formatHashrate(hash, decimals = 2, stringResult = false) {
+export default function formatHashrate(
+  hash,
+  decimals = 2,
+  stringResult = false,
+) {
   if (hash === 0) return "0 H";
   const hashToPrecision = Number(hash).toFixed(20);
   const k = 1000;

@@ -66,7 +66,12 @@ export function workersOnline(workers) {
       offline += 1;
     }
   });
-  return { online, offline, hashrate: formatHashrate(hashrate, 2, true), workers: workersData };
+  return {
+    online,
+    offline,
+    hashrate: formatHashrate(hashrate, 2, true),
+    workers: workersData,
+  };
 }
 
 dayAvgHashrate.propTypes = performanceType;

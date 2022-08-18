@@ -1,4 +1,12 @@
-import { ResponsiveContainer, AreaChart, Area, YAxis, Tooltip, Legend, XAxis } from "recharts";
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  YAxis,
+  Tooltip,
+  Legend,
+  XAxis,
+} from "recharts";
 import colors from "tailwindcss/colors";
 import PropTypes from "prop-types";
 
@@ -38,7 +46,11 @@ function NetworkStats({ data }) {
         >
           <defs>
             <linearGradient id="colorHash" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={colors.teal[600]} stopOpacity={0.8} />
+              <stop
+                offset="5%"
+                stopColor={colors.teal[600]}
+                stopOpacity={0.8}
+              />
               <stop offset="95%" stopColor={colors.teal[600]} stopOpacity={0} />
             </linearGradient>
           </defs>

@@ -2,7 +2,11 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { getPoolStats, getPoolPerformance, getPoolBlocks } from "../../api/getPoolStats";
+import {
+  getPoolStats,
+  getPoolPerformance,
+  getPoolBlocks,
+} from "../../api/getPoolStats";
 import NetworkStats from "../../components/NetworkStats";
 import PoolStats from "../../components/PoolStats";
 import formatHashrate from "../../helpers/hashrateConverter";

@@ -1,7 +1,19 @@
 import PropTypes from "prop-types";
 import colors from "tailwindcss/colors";
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { dayAvgHashrate, workersOnline, getWorkersPerformanceData } from "../helpers/minerStats";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import {
+  dayAvgHashrate,
+  workersOnline,
+  getWorkersPerformanceData,
+} from "../helpers/minerStats";
 import formatHashrate from "../helpers/hashrateConverter";
 
 const propTypes = {
@@ -15,7 +27,7 @@ const propTypes = {
           sharesPerSecond: PropTypes.number.isRequired,
         }),
       ),
-    }),
+    }).isRequired,
     performanceSamples: PropTypes.arrayOf(
       PropTypes.shape({
         created: PropTypes.string,
@@ -32,7 +44,9 @@ const propTypes = {
 };
 
 function MinerStats({ miner, minerId }) {
-  const { online, offline, hashrate, workers } = workersOnline(miner.performance.workers);
+  const { online, offline, hashrate, workers } = workersOnline(
+    miner.performance.workers,
+  );
 
   return (
     <>
@@ -150,7 +164,9 @@ function MinerStats({ miner, minerId }) {
               {workers.map(({ name, hashrate: speed, sharesPerSecond }) => {
                 return (
                   <tr key={`${name}_${speed}`} className="">
-                    <td className="px-6 py-6 whitespace-nowrap text-sm font-medium">{name}</td>
+                    <td className="px-6 py-6 whitespace-nowrap text-sm font-medium">
+                      {name}
+                    </td>
                     <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                       {formatHashrate(speed, 2, true)}
                     </td>

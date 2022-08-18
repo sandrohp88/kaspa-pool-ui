@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import getMinerStatsApiMethod from "../../api/miner";
-import getAllMinersStatsApiMethod from "../../api/miners";
 import MinerStats from "../../components/MinerStats";
 
 const propTypes = {
@@ -14,7 +13,7 @@ const propTypes = {
           sharesPerSecond: PropTypes.number.isRequired,
         }),
       ),
-    }),
+    }).isRequired,
     performanceSamples: PropTypes.arrayOf(
       PropTypes.shape({
         created: PropTypes.string,
@@ -34,23 +33,14 @@ function Miner({ miner, minerId }) {
   return <MinerStats miner={miner} minerId={minerId} />;
 }
 
-export async function getStaticPaths() {
-  try {
-    const allMiners = await getAllMinersStatsApiMethod();
-    // Get the paths we want to pre-render based on miners
-    const paths = allMiners.map((miner) => ({ params: { minerId: miner.miner } }));
-    // We'll pre-render only these paths at build time.
-    // { fallback: false } means other routes should 404.
-    return { paths, fallback: false };
-  } catch (error) {
-    // notify(error);
-    return { fallback: false };
-  }
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   try {
     const fetchedMiner = await getMinerStatsApiMethod(params.minerId);
+    if (!fetchedMiner.performance) {
+      return {
+        notFound: true,
+      };
+    }
     return {
       props: {
         miner: fetchedMiner,
